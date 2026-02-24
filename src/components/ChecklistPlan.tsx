@@ -7,12 +7,12 @@ interface ChecklistPlanProps {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  banking: "hsl(213 62% 22%)",
-  credit: "hsl(148 55% 35%)",
-  transfer: "hsl(185 65% 35%)",
-  documents: "hsl(38 90% 52%)",
-  housing: "hsl(280 50% 45%)",
-  safety: "hsl(0 75% 50%)",
+  banking: "hsl(215 65% 22%)",
+  credit: "hsl(175 55% 35%)",
+  transfer: "hsl(205 75% 48%)",
+  documents: "hsl(210 50% 55%)",
+  housing: "hsl(215 65% 30%)",
+  safety: "hsl(0 65% 52%)",
 };
 
 const PRIORITY_LABELS: Record<string, string> = {

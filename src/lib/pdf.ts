@@ -19,7 +19,7 @@ export async function exportToPDF(output: PipelineOutput, userName?: string): Pr
 
   // Colors
   const navy = [27, 79, 114] as [number, number, number];
-  const amber = [245, 158, 11] as [number, number, number];
+  const accentBlue = [56, 152, 208] as [number, number, number];
   const gray = [107, 114, 128] as [number, number, number];
   const lightGray = [243, 244, 246] as [number, number, number];
 
@@ -90,7 +90,7 @@ export async function exportToPDF(output: PipelineOutput, userName?: string): Pr
     checkPageBreak(50);
 
     if (pathway.recommended) {
-      doc.setFillColor(...amber);
+      doc.setFillColor(...accentBlue);
       doc.roundedRect(margin, y - 2, W - margin * 2, 4, 1, 1, "F");
       doc.setFontSize(7);
       doc.setTextColor(255, 255, 255);

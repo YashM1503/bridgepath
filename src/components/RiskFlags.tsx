@@ -24,9 +24,9 @@ const SEVERITY_CONFIG = {
   low: {
     icon: Info,
     label: "Low",
-    badgeCls: "bg-teal-light/50 text-teal border border-teal/20",
-    iconColor: "text-teal",
-    headerBg: "bg-teal-light/30",
+    badgeCls: "bg-blue-light text-blue-mid border border-blue-mid/20",
+    iconColor: "text-blue-mid",
+    headerBg: "bg-blue-light/50",
   },
 };
 

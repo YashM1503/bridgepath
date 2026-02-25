@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IntakeFormSchema, type IntakeForm } from "@/schemas/intake";
+import { useLanguage } from "@/i18n/LanguageContext";
 import { ChevronRight, ChevronLeft, Globe, Briefcase, CreditCard, Settings2 } from "lucide-react";
 
 interface IntakeFormProps {
@@ -9,12 +10,13 @@ interface IntakeFormProps {
 }
 
 const STEPS = [
-  { label: "Identity", icon: Globe },
-  { label: "Financial", icon: CreditCard },
-  { label: "Situation", icon: Settings2 },
-];
+  { key: "origin", icon: Globe },
+  { key: "status", icon: Briefcase },
+  { key: "finances", icon: CreditCard },
+  { key: "preferences", icon: Settings2 },
+] as const;
 
-type StepKey = 0 | 1 | 2;
+type StepKey = 0 | 1 | 2 | 3;
 
 const countries = [
   { value: "india", label: "🇮🇳 India" },
@@ -107,7 +109,7 @@ function SelectGrid({
   cols?: number;
 }) {
   return (
-    <div className={`grid gap-2 grid-cols-${cols}`} style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
       {options.map((opt) => (
         <button
           key={opt.value}
@@ -115,8 +117,8 @@ function SelectGrid({
           onClick={() => onChange(opt.value)}
           className={`text-left px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all ${
             value === opt.value
-              ? "border-primary bg-primary text-primary-foreground shadow-md"
-              : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-muted/50"
+              ? "border-accent bg-accent/5 text-foreground shadow-sm"
+              : "border-border bg-card text-foreground hover:border-accent/40 hover:bg-muted/50"
           }`}
         >
           {opt.label}
@@ -143,7 +145,7 @@ function ToggleCard({
       onClick={() => onChange(!value)}
       className={`w-full text-left px-4 py-4 rounded-lg border-2 transition-all ${
         value
-          ? "border-primary bg-primary/5"
+          ? "border-accent bg-accent/5"
           : "border-border bg-card hover:border-border/70"
       }`}
     >
@@ -154,7 +156,7 @@ function ToggleCard({
         </div>
         <div
           className={`w-10 h-6 rounded-full transition-all flex items-center ${
-            value ? "bg-primary" : "bg-muted"
+            value ? "bg-accent" : "bg-muted"
           }`}
         >
           <div
@@ -169,13 +171,20 @@ function ToggleCard({
 }
 
 export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
+  const { t } = useLanguage();
   const [step, setStep] = useState<StepKey>(0);
+
+  const stepLabels = [
+    t("intake.step.origin"),
+    t("intake.step.status"),
+    t("intake.step.finances"),
+    t("intake.step.preferences"),
+  ];
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    watch,
     trigger,
   } = useForm<IntakeForm>({
     resolver: zodResolver(IntakeFormSchema),
@@ -197,9 +206,10 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
   });
 
   const stepFields: Record<number, (keyof IntakeForm)[]> = {
-    0: ["originCountry", "destinationZip", "status", "visaType"],
-    1: ["ssnStatus", "savingsBand", "homeCurrency"],
-    2: ["hasHousing", "hasPhone", "feeSensitivity", "languagePreference", "sendMoneyHome", "primaryGoal"],
+    0: ["originCountry", "destinationZip"],
+    1: ["status", "visaType"],
+    2: ["ssnStatus", "savingsBand", "homeCurrency"],
+    3: ["hasHousing", "hasPhone", "feeSensitivity", "languagePreference", "sendMoneyHome", "primaryGoal"],
   };
 
   async function handleNext() {
@@ -215,47 +225,58 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
     onComplete(data);
   };
 
-  const StepIcon = STEPS[step].icon;
+  const progress = ((step + 1) / STEPS.length) * 100;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl mx-auto">
-      {/* Step indicator */}
-      <div className="flex items-center gap-3 mb-8">
+      {/* Step indicator - matching reference design */}
+      <div className="flex items-center justify-between mb-2">
         {STEPS.map((s, i) => {
           const Icon = s.icon;
+          const isActive = i === step;
+          const isCompleted = i < step;
           return (
-            <React.Fragment key={s.label}>
-              <div className="flex items-center gap-2">
+            <React.Fragment key={s.key}>
+              <div className="flex flex-col items-center gap-1">
                 <div
-                  className={`step-indicator ${
-                    i < step ? "completed" : i === step ? "active" : "pending"
+                  className={`w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all ${
+                    isCompleted
+                      ? "bg-accent text-accent-foreground"
+                      : isActive
+                      ? "bg-accent text-accent-foreground"
+                      : "bg-muted text-muted-foreground"
                   }`}
                 >
-                  {i < step ? "✓" : <Icon size={14} />}
+                  {isCompleted ? "✓" : <Icon size={16} />}
                 </div>
-                <span
-                  className={`text-sm font-medium hidden sm:inline ${
-                    i === step ? "text-foreground" : "text-muted-foreground"
-                  }`}
-                >
-                  {s.label}
+                <span className={`text-xs font-medium ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
+                  {stepLabels[i]}
                 </span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={`flex-1 h-px ${i < step ? "bg-success" : "bg-border"}`} />
+                <div className={`flex-1 h-px mx-2 ${i < step ? "bg-accent" : "bg-border"}`} />
               )}
             </React.Fragment>
           );
         })}
       </div>
 
-      <div className="animate-fade-in">
-        {/* Step 0: Identity */}
+      {/* Progress bar */}
+      <div className="h-1 bg-muted rounded-full mb-8 overflow-hidden">
+        <div
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${progress}%`, background: "hsl(var(--accent))" }}
+        />
+      </div>
+
+      {/* Card wrapper */}
+      <div className="bp-card p-6 sm:p-8 animate-fade-in">
+        {/* Step 0: Origin */}
         {step === 0 && (
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl font-bold text-foreground mb-1">Where are you coming from?</h2>
-              <p className="text-sm text-muted-foreground">We'll customize recommendations for your corridor.</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">{t("intake.origin.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("intake.origin.desc")}</p>
             </div>
 
             <Controller
@@ -263,7 +284,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Origin Country</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.origin.country")} *</label>
                   <SelectGrid options={countries} value={field.value} onChange={field.onChange} cols={3} />
                   {errors.originCountry && <p className="text-destructive text-xs mt-1">{errors.originCountry.message}</p>}
                 </div>
@@ -275,23 +296,34 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Destination ZIP Code</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.origin.zip")} *</label>
                   <input
                     {...field}
-                    placeholder="e.g. 10001"
+                    placeholder="e.g. 94105"
                     className="w-full px-4 py-3 rounded-lg border border-input bg-card text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   />
+                  <p className="text-xs text-muted-foreground mt-1">{t("intake.origin.zipHint")}</p>
                   {errors.destinationZip && <p className="text-destructive text-xs mt-1">{errors.destinationZip.message}</p>}
                 </div>
               )}
             />
+          </div>
+        )}
+
+        {/* Step 1: Status */}
+        {step === 1 && (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-xl font-bold text-foreground mb-1">{t("intake.status.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("intake.status.desc")}</p>
+            </div>
 
             <Controller
               name="status"
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Your Status</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.status.label")}</label>
                   <SelectGrid options={statuses} value={field.value} onChange={field.onChange} cols={3} />
                   {errors.status && <p className="text-destructive text-xs mt-1">{errors.status.message}</p>}
                 </div>
@@ -303,7 +335,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Visa Type</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.status.visa")}</label>
                   <div className="grid grid-cols-3 gap-2">
                     {visaTypes.map((opt) => (
                       <button
@@ -312,8 +344,8 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
                         onClick={() => field.onChange(opt.value)}
                         className={`text-left px-3 py-2 rounded-lg border-2 text-xs font-medium transition-all ${
                           field.value === opt.value
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-border bg-card text-foreground hover:border-primary/50"
+                            ? "border-accent bg-accent/5 text-foreground"
+                            : "border-border bg-card text-foreground hover:border-accent/40"
                         }`}
                       >
                         {opt.label}
@@ -327,12 +359,12 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
           </div>
         )}
 
-        {/* Step 1: Financial */}
-        {step === 1 && (
+        {/* Step 2: Financial */}
+        {step === 2 && (
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl font-bold text-foreground mb-1">Your financial picture</h2>
-              <p className="text-sm text-muted-foreground">No exact amounts needed — ranges help us match you to the right options.</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">{t("intake.financial.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("intake.financial.desc")}</p>
             </div>
 
             <Controller
@@ -340,7 +372,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">SSN / ITIN Status</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.financial.ssn")}</label>
                   <SelectGrid options={ssnStatuses} value={field.value} onChange={field.onChange} cols={1} />
                   {errors.ssnStatus && <p className="text-destructive text-xs mt-1">{errors.ssnStatus.message}</p>}
                 </div>
@@ -352,7 +384,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Approximate Savings Available (USD)</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.financial.savings")}</label>
                   <SelectGrid options={savingsBands} value={field.value} onChange={field.onChange} cols={2} />
                   {errors.savingsBand && <p className="text-destructive text-xs mt-1">{errors.savingsBand.message}</p>}
                 </div>
@@ -364,9 +396,8 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Home Currency</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.financial.currency")}</label>
                   <SelectGrid options={currencies} value={field.value} onChange={field.onChange} cols={3} />
-                  {errors.homeCurrency && <p className="text-destructive text-xs mt-1">{errors.homeCurrency.message}</p>}
                 </div>
               )}
             />
@@ -376,7 +407,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Payroll Start Date (optional)</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.financial.payroll")}</label>
                   <input
                     {...field}
                     type="date"
@@ -388,24 +419,19 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
           </div>
         )}
 
-        {/* Step 2: Situation */}
-        {step === 2 && (
+        {/* Step 3: Preferences */}
+        {step === 3 && (
           <div className="space-y-6">
             <div>
-              <h2 className="text-xl font-bold text-foreground mb-1">Your situation & preferences</h2>
-              <p className="text-sm text-muted-foreground">These details help us flag risks and prioritize your action plan.</p>
+              <h2 className="text-xl font-bold text-foreground mb-1">{t("intake.prefs.title")}</h2>
+              <p className="text-sm text-muted-foreground">{t("intake.prefs.desc")}</p>
             </div>
 
             <Controller
               name="hasHousing"
               control={control}
               render={({ field }) => (
-                <ToggleCard
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="I have a US address established"
-                  description="Temporary housing, employer housing, or confirmed lease counts"
-                />
+                <ToggleCard value={field.value} onChange={field.onChange} label={t("intake.prefs.housing")} description={t("intake.prefs.housingDesc")} />
               )}
             />
 
@@ -413,12 +439,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               name="hasPhone"
               control={control}
               render={({ field }) => (
-                <ToggleCard
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="I have a US phone number"
-                  description="Required for 2FA on all US bank accounts"
-                />
+                <ToggleCard value={field.value} onChange={field.onChange} label={t("intake.prefs.phone")} description={t("intake.prefs.phoneDesc")} />
               )}
             />
 
@@ -426,12 +447,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               name="sendMoneyHome"
               control={control}
               render={({ field }) => (
-                <ToggleCard
-                  value={field.value}
-                  onChange={field.onChange}
-                  label="I plan to send money home regularly"
-                  description="We'll include remittance recommendations and fee comparisons"
-                />
+                <ToggleCard value={field.value} onChange={field.onChange} label={t("intake.prefs.sendMoney")} description={t("intake.prefs.sendMoneyDesc")} />
               )}
             />
 
@@ -440,7 +456,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Fee Sensitivity</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.prefs.feeSensitivity")}</label>
                   <SelectGrid options={feeSensitivities} value={field.value} onChange={field.onChange} cols={1} />
                 </div>
               )}
@@ -451,7 +467,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Language Preference</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.prefs.language")}</label>
                   <SelectGrid options={languagePrefs} value={field.value} onChange={field.onChange} cols={3} />
                 </div>
               )}
@@ -462,7 +478,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
               control={control}
               render={({ field }) => (
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">Primary Goal (first 30 days)</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">{t("intake.prefs.goal")}</label>
                   <SelectGrid options={primaryGoals} value={field.value} onChange={field.onChange} cols={1} />
                 </div>
               )}
@@ -472,14 +488,14 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-3 mt-8">
+      <div className="flex gap-3 mt-6">
         {step > 0 && (
           <button
             type="button"
             onClick={handleBack}
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition-all"
           >
-            <ChevronLeft size={16} /> Back
+            <ChevronLeft size={16} /> {t("intake.back")}
           </button>
         )}
         <div className="flex-1" />
@@ -487,18 +503,16 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
           <button
             type="button"
             onClick={handleNext}
-            className="flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all"
-            style={{ background: "hsl(var(--primary))", color: "hsl(var(--primary-foreground))" }}
+            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
-            Continue <ChevronRight size={16} />
+            {t("intake.continue")} <ChevronRight size={16} />
           </button>
         ) : (
           <button
             type="submit"
-            className="flex items-center gap-2 px-8 py-3 rounded-lg text-sm font-semibold transition-all amber-gradient"
-            style={{ color: "hsl(var(--accent-gold-foreground))" }}
+            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
-            Generate My Plan <ChevronRight size={16} />
+            {t("intake.submit")} <ChevronRight size={16} />
           </button>
         )}
       </div>

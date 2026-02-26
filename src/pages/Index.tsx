@@ -10,6 +10,7 @@ import ChecklistPlan from "@/components/ChecklistPlan";
 import DocumentTemplates from "@/components/DocumentTemplates";
 import ResourceDirectory from "@/components/ResourceDirectory";
 import DemoProfiles from "@/components/DemoProfiles";
+import DocumentChecker from "@/components/DocumentChecker";
 import LanguageToggle from "@/components/LanguageToggle";
 import type { DemoProfile } from "@/data/demoProfiles";
 import { getCorridorByCountry } from "@/data/corridors";
@@ -17,11 +18,11 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import {
   Download, RefreshCw, ArrowRight,
   Compass, AlertTriangle, CheckSquare, FileText, ExternalLink, Users,
-  MapPin, CreditCard, Settings2
+  MapPin, FileSearch
 } from "lucide-react";
 
 type AppStep = "landing" | "intake" | "results";
-type ResultPage = "pathways" | "risks" | "checklist" | "templates" | "resources";
+type ResultPage = "pathways" | "risks" | "checklist" | "templates" | "resources" | "doccheck";
 
 export default function Index() {
   const { t } = useLanguage();
@@ -39,6 +40,7 @@ export default function Index() {
     { key: "risks", label: t("nav.risks"), icon: AlertTriangle },
     { key: "checklist", label: t("nav.plan"), icon: CheckSquare },
     { key: "templates", label: t("nav.templates"), icon: FileText },
+    { key: "doccheck", label: "Doc Check", icon: FileSearch },
     { key: "resources", label: t("nav.resources"), icon: ExternalLink },
   ];
 
@@ -330,6 +332,7 @@ export default function Index() {
             {activePage === "risks" && <RiskFlags flags={output.riskFlags} />}
             {activePage === "checklist" && <ChecklistPlan items={output.checklist} />}
             {activePage === "templates" && <DocumentTemplates templates={output.templates} />}
+            {activePage === "doccheck" && <DocumentChecker />}
             {activePage === "resources" && <ResourceDirectory corridorId={output.profile.corridorId} />}
           </>
         )}

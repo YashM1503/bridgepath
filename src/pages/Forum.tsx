@@ -268,7 +268,7 @@ export default function Forum() {
                           <p className="text-xs font-medium text-foreground">{reply.author_name}</p>
                           <p className="text-xs text-muted-foreground">{new Date(reply.created_at).toLocaleDateString()}</p>
                         </div>
-                        <button onClick={() => handleUpvoteReply(reply.id)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
+                        <button onClick={() => handleUpvoteReply(reply.id)} aria-label={`Upvote reply (${reply.upvotes} upvotes)`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
                           <ThumbsUp size={12} /> {reply.upvotes}
                         </button>
                       </div>

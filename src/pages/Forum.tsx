@@ -103,17 +103,13 @@ export default function Forum() {
   }
 
   async function handleUpvotePost(postId: string) {
-    const post = posts.find((p) => p.id === postId);
-    if (!post) return;
-    await supabase.from("forum_posts").update({ upvotes: post.upvotes + 1 }).eq("id", postId);
+    await supabase.rpc("increment_forum_post_upvotes", { _post_id: postId });
     fetchPosts();
   }
 
   async function handleUpvoteReply(replyId: string) {
-    const reply = replies.find((r) => r.id === replyId);
-    if (!reply) return;
-    await supabase.from("forum_replies").update({ upvotes: reply.upvotes + 1 }).eq("id", replyId);
-    fetchReplies(selectedPost!.id);
+    await supabase.rpc("increment_forum_reply_upvotes", { _reply_id: replyId });
+    if (selectedPost) fetchReplies(selectedPost.id);
   }
 
   function selectPost(post: ForumPost) {

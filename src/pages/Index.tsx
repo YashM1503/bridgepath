@@ -188,7 +188,7 @@ export default function Index() {
             ].map((f) => (
               <div key={f.title} className="bp-card p-6 text-center">
                 <div className="text-3xl mb-3">{f.emoji}</div>
-                <h3 className="font-bold text-foreground mb-1">{f.title}</h3>
+                <h2 className="font-bold text-foreground mb-1 text-base">{f.title}</h2>
                 <p className="text-sm text-muted-foreground">{f.desc}</p>
               </div>
             ))}

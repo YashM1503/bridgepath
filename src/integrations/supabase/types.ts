@@ -90,7 +90,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_forum_post_upvotes: {
+        Args: { _post_id: string }
+        Returns: number
+      }
+      increment_forum_reply_upvotes: {
+        Args: { _reply_id: string }
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

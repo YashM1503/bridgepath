@@ -133,6 +133,7 @@ export default function Forum() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-6">
+        <h1 className="sr-only">BridgePath Community Forum — Ask & Share Newcomer Experiences</h1>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-4">

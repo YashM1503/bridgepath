@@ -42,7 +42,7 @@ export default function PathwayResults({ pathways, selected, onSelect }: Pathway
   return (
     <div className="space-y-4 animate-fade-in">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xl font-bold text-foreground">Your Transition Pathways</h2>
+        <h1 className="text-xl font-bold text-foreground">Your Transition Pathways</h1>
         <span className="text-xs text-muted-foreground">{pathways.length} options ranked for you</span>
       </div>
       <p className="text-sm text-muted-foreground mb-2">

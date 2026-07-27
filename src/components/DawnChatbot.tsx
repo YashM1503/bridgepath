@@ -168,7 +168,7 @@ export default function DawnChatbot() {
                 <p className="text-[10px] text-white/60">BridgePath Assistant • {LANG_LABELS[lang]}</p>
               </div>
             </div>
-            <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white">
+            <button onClick={() => setOpen(false)} aria-label="Close Dawn chatbot" className="text-white/60 hover:text-white">
               <X size={18} />
             </button>
           </div>
@@ -220,6 +220,7 @@ export default function DawnChatbot() {
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
+                aria-label="Send message"
                 className="flex-shrink-0 p-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50 transition-all"
               >
                 <Send size={16} />

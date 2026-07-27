@@ -133,6 +133,7 @@ export default function Forum() {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-6">
+        <h1 className="sr-only">BridgePath Community Forum — Ask & Share Newcomer Experiences</h1>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-4">
@@ -251,7 +252,7 @@ export default function Forum() {
                         by {selectedPost.author_name} • {new Date(selectedPost.created_at).toLocaleDateString()} • {selectedPost.category}
                       </p>
                     </div>
-                    <button onClick={() => handleUpvotePost(selectedPost.id)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
+                    <button onClick={() => handleUpvotePost(selectedPost.id)} aria-label={`Upvote post (${selectedPost.upvotes} upvotes)`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
                       <ThumbsUp size={14} /> {selectedPost.upvotes}
                     </button>
                   </div>
@@ -267,7 +268,7 @@ export default function Forum() {
                           <p className="text-xs font-medium text-foreground">{reply.author_name}</p>
                           <p className="text-xs text-muted-foreground">{new Date(reply.created_at).toLocaleDateString()}</p>
                         </div>
-                        <button onClick={() => handleUpvoteReply(reply.id)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
+                        <button onClick={() => handleUpvoteReply(reply.id)} aria-label={`Upvote reply (${reply.upvotes} upvotes)`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
                           <ThumbsUp size={12} /> {reply.upvotes}
                         </button>
                       </div>

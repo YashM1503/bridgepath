@@ -111,7 +111,8 @@ export default function Index() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
-              {t("landing.title")}
+              <span>{t("landing.title")}</span>
+              <span className="sr-only"> — Financial Onboarding for Newcomers to the USA</span>
             </h1>
 
             <p className="text-xl sm:text-2xl font-light mb-4 opacity-90 italic">
@@ -187,7 +188,7 @@ export default function Index() {
             ].map((f) => (
               <div key={f.title} className="bp-card p-6 text-center">
                 <div className="text-3xl mb-3">{f.emoji}</div>
-                <h3 className="font-bold text-foreground mb-1">{f.title}</h3>
+                <h2 className="font-bold text-foreground mb-1 text-base">{f.title}</h2>
                 <p className="text-sm text-muted-foreground">{f.desc}</p>
               </div>
             ))}

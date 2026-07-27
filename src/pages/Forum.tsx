@@ -252,7 +252,7 @@ export default function Forum() {
                         by {selectedPost.author_name} • {new Date(selectedPost.created_at).toLocaleDateString()} • {selectedPost.category}
                       </p>
                     </div>
-                    <button onClick={() => handleUpvotePost(selectedPost.id)} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
+                    <button onClick={() => handleUpvotePost(selectedPost.id)} aria-label={`Upvote post (${selectedPost.upvotes} upvotes)`} className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
                       <ThumbsUp size={14} /> {selectedPost.upvotes}
                     </button>
                   </div>

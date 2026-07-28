@@ -1,4 +1,12 @@
 import { useState, useEffect } from "react";
+
+function useDocumentMeta(title: string, description: string) {
+  useEffect(() => {
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", description);
+  }, [title, description]);
+}
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ArrowLeft, MessageSquare, ThumbsUp, Send, ExternalLink, Plus } from "lucide-react";

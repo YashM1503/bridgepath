@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { IntakeForm } from "@/schemas/intake";
 import type { PipelineOutput } from "@/schemas/intake";
 import { runPipeline } from "@/lib/pipeline";
@@ -34,6 +34,26 @@ export default function Index() {
   const [loading, setLoading] = useState(false);
   const [demoProfile, setDemoProfile] = useState<DemoProfile | null>(null);
   const [showDemo, setShowDemo] = useState(false);
+
+  useEffect(() => {
+    const meta: Record<AppStep, { title: string; desc: string }> = {
+      landing: {
+        title: "BridgePath — US Financial Onboarding for Newcomers",
+        desc: "Get a personalized banking plan, risk flags, and a 30-day checklist for newcomers to the USA from India, China, and Latin America.",
+      },
+      intake: {
+        title: "Intake — BridgePath",
+        desc: "Answer a few questions to generate your personalized US financial onboarding plan.",
+      },
+      results: {
+        title: "Your Plan — BridgePath",
+        desc: "Personalized banking pathways, risk flags, checklist, and templates for your US financial onboarding.",
+      },
+    };
+    document.title = meta[appStep].title;
+    const m = document.querySelector('meta[name="description"]');
+    if (m) m.setAttribute("content", meta[appStep].desc);
+  }, [appStep]);
 
   const NAV_ITEMS: { key: ResultPage; label: string; icon: typeof Compass }[] = [
     { key: "pathways", label: t("nav.pathways"), icon: Compass },

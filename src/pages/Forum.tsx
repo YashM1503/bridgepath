@@ -55,6 +55,10 @@ const REDDIT_SUBS = [
 
 export default function Forum() {
   const { t } = useLanguage();
+  useDocumentMeta(
+    "Community Forum — BridgePath",
+    "Ask questions and share experiences with other newcomers to the USA about banking, credit, taxes, and remittances."
+  );
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
   const [replies, setReplies] = useState<ForumReply[]>([]);

@@ -297,16 +297,18 @@ export default function Forum() {
                 <div className="bp-card p-3 space-y-2">
                   <input
                     value={newReply.author_name}
-                    onChange={(e) => setNewReply({ ...newReply, author_name: e.target.value })}
+                    onChange={(e) => setNewReply({ ...newReply, author_name: e.target.value.slice(0, 80) })}
                     placeholder="Your name (optional)"
+                    maxLength={80}
                     className="w-full bg-muted rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                   <div className="flex gap-2">
                     <input
                       value={newReply.body}
-                      onChange={(e) => setNewReply({ ...newReply, body: e.target.value })}
+                      onChange={(e) => setNewReply({ ...newReply, body: e.target.value.slice(0, 5000) })}
                       onKeyDown={(e) => e.key === "Enter" && handleCreateReply()}
                       placeholder="Write a reply…"
+                      maxLength={5000}
                       className="flex-1 bg-muted rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                     />
                     <button onClick={handleCreateReply} className="px-3 py-2 rounded-lg bg-primary text-primary-foreground hover:opacity-90">

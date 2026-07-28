@@ -1,4 +1,12 @@
 import { useState, useEffect } from "react";
+
+function useDocumentMeta(title: string, description: string) {
+  useEffect(() => {
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", description);
+  }, [title, description]);
+}
 import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ArrowLeft, MessageSquare, ThumbsUp, Send, ExternalLink, Plus } from "lucide-react";
@@ -47,6 +55,10 @@ const REDDIT_SUBS = [
 
 export default function Forum() {
   const { t } = useLanguage();
+  useDocumentMeta(
+    "Community Forum — BridgePath",
+    "Ask questions and share experiences with other newcomers to the USA about banking, credit, taxes, and remittances."
+  );
   const [posts, setPosts] = useState<ForumPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<ForumPost | null>(null);
   const [replies, setReplies] = useState<ForumReply[]>([]);

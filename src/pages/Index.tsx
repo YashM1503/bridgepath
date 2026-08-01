@@ -227,6 +227,22 @@ export default function Index() {
             ))}
           </div>
 
+          <div className="bp-card p-6 mb-14 flex flex-col sm:flex-row items-center gap-4 justify-between">
+            <div>
+              <h2 className="font-bold text-foreground text-base mb-1">Ask people who already did it</h2>
+              <p className="text-sm text-muted-foreground">
+                A community forum for newcomers — questions about banking, documents and first steps.
+                Peer experiences, not official guidance.
+              </p>
+            </div>
+            <Link
+              to="/forum"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all whitespace-nowrap"
+            >
+              <MessagesSquare size={16} /> Open the forum
+            </Link>
+          </div>
+
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">{t("landing.supporting")}</p>
             <div className="flex flex-wrap justify-center gap-3">

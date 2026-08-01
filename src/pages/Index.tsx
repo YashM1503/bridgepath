@@ -11,18 +11,21 @@ import DocumentTemplates from "@/components/DocumentTemplates";
 import ResourceDirectory from "@/components/ResourceDirectory";
 import DemoProfiles from "@/components/DemoProfiles";
 import DocumentChecker from "@/components/DocumentChecker";
+import CostEstimates from "@/components/CostEstimates";
+import NewsCenter from "@/components/NewsCenter";
 import LanguageToggle from "@/components/LanguageToggle";
 import type { DemoProfile } from "@/data/demoProfiles";
 import { getCorridorByCountry } from "@/data/corridors";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { Link } from "react-router-dom";
 import {
   Download, RefreshCw, ArrowRight,
   Compass, AlertTriangle, CheckSquare, FileText, ExternalLink, Users,
-  MapPin, FileSearch
+  MapPin, FileSearch, Wallet, Newspaper, MessagesSquare
 } from "lucide-react";
 
 type AppStep = "landing" | "intake" | "results";
-type ResultPage = "pathways" | "risks" | "checklist" | "templates" | "resources" | "doccheck";
+type ResultPage = "pathways" | "risks" | "checklist" | "templates" | "resources" | "doccheck" | "costs" | "news";
 
 export default function Index() {
   const { t } = useLanguage();
@@ -61,6 +64,8 @@ export default function Index() {
     { key: "checklist", label: t("nav.plan"), icon: CheckSquare },
     { key: "templates", label: t("nav.templates"), icon: FileText },
     { key: "doccheck", label: "Doc Check", icon: FileSearch },
+    { key: "costs", label: "Fees & Costs", icon: Wallet },
+    { key: "news", label: "Updates", icon: Newspaper },
     { key: "resources", label: t("nav.resources"), icon: ExternalLink },
   ];
 
@@ -118,7 +123,15 @@ export default function Index() {
           {/* Top bar */}
           <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
             <span className="text-primary-foreground/60 text-xs font-medium tracking-wider">BRIDGEPATH</span>
-            <LanguageToggle />
+            <div className="flex items-center gap-3">
+              <Link
+                to="/forum"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-primary-foreground/25 text-primary-foreground/80 hover:bg-primary-foreground/10 transition-all"
+              >
+                <MessagesSquare size={13} /> Forum
+              </Link>
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Hero content */}
@@ -214,6 +227,22 @@ export default function Index() {
             ))}
           </div>
 
+          <div className="bp-card p-6 mb-14 flex flex-col sm:flex-row items-center gap-4 justify-between">
+            <div>
+              <h2 className="font-bold text-foreground text-base mb-1">Ask people who already did it</h2>
+              <p className="text-sm text-muted-foreground">
+                A community forum for newcomers — questions about banking, documents and first steps.
+                Peer experiences, not official guidance.
+              </p>
+            </div>
+            <Link
+              to="/forum"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-all whitespace-nowrap"
+            >
+              <MessagesSquare size={16} /> Open the forum
+            </Link>
+          </div>
+
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-4">{t("landing.supporting")}</p>
             <div className="flex flex-wrap justify-center gap-3">
@@ -277,6 +306,12 @@ export default function Index() {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <Link
+              to="/forum"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+            >
+              <MessagesSquare size={13} /> Community Forum
+            </Link>
             <LanguageToggle />
             <button
               onClick={handleExport}
@@ -354,6 +389,8 @@ export default function Index() {
             {activePage === "checklist" && <ChecklistPlan items={output.checklist} />}
             {activePage === "templates" && <DocumentTemplates templates={output.templates} />}
             {activePage === "doccheck" && <DocumentChecker />}
+            {activePage === "costs" && <CostEstimates corridorId={output.profile.corridorId} />}
+            {activePage === "news" && <NewsCenter />}
             {activePage === "resources" && <ResourceDirectory corridorId={output.profile.corridorId} />}
           </>
         )}

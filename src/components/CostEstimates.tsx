@@ -92,13 +92,12 @@ export default function CostEstimates({ corridorId }: CostEstimatesProps) {
         </div>
       )}
 
-
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
         {COST_CATEGORIES.map((cat) => (
           <button
             key={cat.key}
             onClick={() => setFilter(cat.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap flex-shrink-0 ${
               filter === cat.key
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-secondary"

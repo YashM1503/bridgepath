@@ -281,7 +281,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
       </div>
 
       {/* Card wrapper */}
-      <div className="bp-card p-6 sm:p-8 animate-fade-in">
+      <div className="bp-card p-4 sm:p-6 md:p-8 animate-fade-in">
         {/* Step 0: Origin */}
         {step === 0 && (
           <div className="space-y-6">

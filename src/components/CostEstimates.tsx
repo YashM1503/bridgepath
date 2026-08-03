@@ -15,18 +15,19 @@ function formatFee(item: CostItem) {
 function CostRow({ item }: { item: CostItem }) {
   return (
     <div className="bp-card p-4">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
-          <h3 className="font-semibold text-sm text-foreground">{item.name}</h3>
+          <h3 className="font-semibold text-sm text-foreground break-words">{item.name}</h3>
           {item.code && <p className="text-xs text-muted-foreground mt-0.5">{item.code}</p>}
         </div>
         <div className="text-right flex-shrink-0">
-          <p className="font-bold text-base text-foreground tabular-nums">{formatFee(item)}</p>
+          <p className="font-bold text-sm sm:text-base text-foreground tabular-nums">{formatFee(item)}</p>
           <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Ballpark</p>
         </div>
       </div>
 
       <dl className="mt-3 grid gap-2 text-xs sm:grid-cols-2">
+
         <div>
           <dt className="text-muted-foreground">Typical timeline</dt>
           <dd className="text-foreground">{item.typicalTimeline}</dd>

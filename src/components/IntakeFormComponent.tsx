@@ -156,13 +156,13 @@ function ToggleCard({
           : "border-border bg-card hover:border-border/70"
       }`}
     >
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
           <p className="font-medium text-sm text-foreground">{label}</p>
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
         </div>
         <div
-          className={`w-10 h-6 rounded-full transition-all flex items-center ${
+          className={`w-10 h-6 flex-shrink-0 rounded-full transition-all flex items-center ${
             value ? "bg-accent" : "bg-muted"
           }`}
         >

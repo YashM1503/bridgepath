@@ -115,12 +115,12 @@ export default function Forum() {
   }
 
   async function handleUpvotePost(postId: string) {
-    await supabase.rpc("increment_forum_post_upvotes", { _post_id: postId });
+    await supabase.functions.invoke("forum-upvote", { body: { target: "post", id: postId } });
     fetchPosts();
   }
 
   async function handleUpvoteReply(replyId: string) {
-    await supabase.rpc("increment_forum_reply_upvotes", { _reply_id: replyId });
+    await supabase.functions.invoke("forum-upvote", { body: { target: "reply", id: replyId } });
     if (selectedPost) fetchReplies(selectedPost.id);
   }
 

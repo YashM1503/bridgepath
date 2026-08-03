@@ -97,6 +97,12 @@ const primaryGoals = [
   { value: "all", label: "✨ All of the above" },
 ];
 
+const COL_CLASSES: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-2 sm:grid-cols-3",
+};
+
 function SelectGrid({
   options,
   value,
@@ -109,13 +115,13 @@ function SelectGrid({
   cols?: number;
 }) {
   return (
-    <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className={`grid gap-2 ${COL_CLASSES[cols] ?? COL_CLASSES[2]}`}>
       {options.map((opt) => (
         <button
           key={opt.value}
           type="button"
           onClick={() => onChange(opt.value)}
-          className={`text-left px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all ${
+          className={`text-left px-3 sm:px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all break-words ${
             value === opt.value
               ? "border-accent bg-accent/5 text-foreground shadow-sm"
               : "border-border bg-card text-foreground hover:border-accent/40 hover:bg-muted/50"
@@ -127,6 +133,7 @@ function SelectGrid({
     </div>
   );
 }
+
 
 function ToggleCard({
   value,

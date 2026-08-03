@@ -121,7 +121,7 @@ export default function Index() {
         {/* Full-bleed dark hero */}
         <div className="hero-gradient text-primary-foreground">
           {/* Top bar */}
-          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <span className="text-primary-foreground/60 text-xs font-medium tracking-wider">BRIDGEPATH</span>
             <div className="flex items-center gap-3">
               <Link

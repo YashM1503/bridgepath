@@ -11,7 +11,7 @@ export default function NewsCenter() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h2 className="text-xl font-bold text-foreground">Visa & Immigration Updates</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-foreground">Visa &amp; Immigration Updates</h2>
         <p className="text-sm text-muted-foreground mt-1">
           One place to reach every official feed that actually changes your case — plus short
           plain-language explainers on things newcomers most often miss. Summaries reviewed{" "}

@@ -244,9 +244,9 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
           const isCompleted = i < step;
           return (
             <React.Fragment key={s.key}>
-              <div className="flex flex-col items-center gap-1">
+              <div className="flex flex-col items-center gap-1 min-w-0">
                 <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-sm transition-all ${
                     isCompleted
                       ? "bg-accent text-accent-foreground"
                       : isActive
@@ -256,12 +256,16 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
                 >
                   {isCompleted ? "✓" : <Icon size={16} />}
                 </div>
-                <span className={`text-xs font-medium ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
+                <span
+                  className={`text-[10px] sm:text-xs font-medium text-center leading-tight max-w-[4.5rem] sm:max-w-none truncate sm:whitespace-normal ${
+                    isActive ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                >
                   {stepLabels[i]}
                 </span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={`flex-1 h-px mx-2 ${i < step ? "bg-accent" : "bg-border"}`} />
+                <div className={`flex-1 h-px mx-1 sm:mx-2 ${i < step ? "bg-accent" : "bg-border"}`} />
               )}
             </React.Fragment>
           );

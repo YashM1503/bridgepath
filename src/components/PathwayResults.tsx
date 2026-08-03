@@ -61,21 +61,24 @@ export default function PathwayResults({ pathways, selected, onSelect }: Pathway
           >
             <div className="flex items-start gap-3 mb-4">
               <div
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-primary text-primary-foreground"
+                className="flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-sm font-bold bg-primary text-primary-foreground"
               >
                 {pathway.recommended ? <Star size={16} /> : idx + 1}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="font-bold text-foreground">{pathway.name}</h3>
+                  <h3 className="font-bold text-foreground break-words">{pathway.name}</h3>
                   {pathway.recommended && (
                     <span className="bp-badge-accent text-xs">★ Recommended</span>
                   )}
                   <span className={badge.cls}>{badge.label}</span>
+                  <span className="text-xs text-muted-foreground inline-flex items-center gap-1 sm:hidden">
+                    <Clock size={12} />~{pathway.estimatedDays}d
+                  </span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-0.5">{pathway.tagline}</p>
               </div>
-              <div className="flex-shrink-0 text-xs text-muted-foreground flex items-center gap-1">
+              <div className="hidden sm:flex flex-shrink-0 text-xs text-muted-foreground items-center gap-1">
                 <Clock size={12} />
                 ~{pathway.estimatedDays}d
               </div>
@@ -83,7 +86,7 @@ export default function PathwayResults({ pathways, selected, onSelect }: Pathway
 
             <p className="text-sm text-foreground mb-4 leading-relaxed">{pathway.description}</p>
 
-            <div className="grid grid-cols-2 gap-x-6 gap-y-3 mb-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 mb-4">
               <ScoreBar label="Cost Efficiency" value={pathway.scores.cost} color={SCORE_COLORS.cost} />
               <ScoreBar label="Speed" value={pathway.scores.speed} color={SCORE_COLORS.speed} />
               <ScoreBar label="Accessibility" value={pathway.scores.access} color={SCORE_COLORS.access} />

@@ -373,8 +373,8 @@ export default function Index() {
 
       {/* Profile summary bar */}
       {output && (
-        <div className="bg-muted/50 border-b border-border px-6 py-2.5">
-          <div className="max-w-5xl mx-auto flex flex-wrap gap-4 text-xs text-foreground">
+        <div className="bg-muted/50 border-b border-border px-4 sm:px-6 py-2.5">
+          <div className="max-w-5xl mx-auto flex flex-wrap gap-x-4 gap-y-1 text-xs text-foreground">
             <span><strong>Status:</strong> {output.profile.corridorId.toUpperCase()} · {output.profile.riskLevel}</span>
             {demoProfile && <span><strong>Demo:</strong> {demoProfile.name} — {demoProfile.tagline}</span>}
           </div>
@@ -383,15 +383,15 @@ export default function Index() {
 
       {/* Disclaimer banner */}
       {output && (
-        <div style={{ background: "hsl(var(--warning-light))" }} className="border-b border-border px-6 py-2">
-          <p className="text-xs text-foreground/70 text-center max-w-5xl mx-auto">
+        <div style={{ background: "hsl(var(--warning-light))" }} className="border-b border-border px-4 sm:px-6 py-2">
+          <p className="text-xs text-foreground/70 text-center max-w-5xl mx-auto leading-relaxed">
             {t("results.disclaimer")}
           </p>
         </div>
       )}
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-6 py-6 pb-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-6 pb-16">
         {output && (
           <>
             {activePage === "pathways" && (

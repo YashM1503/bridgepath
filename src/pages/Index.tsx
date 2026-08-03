@@ -292,72 +292,84 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Results Header */}
-      <div className="border-b border-border bg-card px-6 py-3 sticky top-0 z-20">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button onClick={handleRestart} className="text-foreground font-bold text-lg hover:opacity-80 transition-opacity">
-              BridgePath
-            </button>
-            {output && (
-              <span className="text-xs text-muted-foreground border-l border-border pl-4">
-                {demoProfile ? `${demoProfile.avatar} ${demoProfile.name}` : ""} {output.profile.corridorId.toUpperCase()} → ZIP
-              </span>
-            )}
+      <div className="sticky top-0 z-20">
+        {/* Results Header */}
+        <div className="border-b border-border bg-card px-4 sm:px-6 py-3">
+          <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <button onClick={handleRestart} className="text-foreground font-bold text-base sm:text-lg hover:opacity-80 transition-opacity">
+                BridgePath
+              </button>
+              {output && (
+                <span className="hidden sm:inline text-xs text-muted-foreground border-l border-border pl-4 truncate">
+                  {demoProfile ? `${demoProfile.avatar} ${demoProfile.name}` : ""} {output.profile.corridorId.toUpperCase()} → ZIP
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/forum"
+                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <MessagesSquare size={13} /> Community Forum
+              </Link>
+              <Link
+                to="/forum"
+                aria-label="Community forum"
+                className="md:hidden flex items-center justify-center p-2 rounded-lg border border-border hover:bg-muted transition-all"
+              >
+                <MessagesSquare size={14} />
+              </Link>
+              <LanguageToggle />
+              <button
+                onClick={handleExport}
+                disabled={exporting}
+                aria-label={t("nav.exportPdf")}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <Download size={13} /> <span className="hidden sm:inline">{exporting ? t("nav.exporting") : t("nav.exportPdf")}</span>
+              </button>
+              <button
+                onClick={handleRestart}
+                aria-label={t("nav.restart")}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <RefreshCw size={13} /> <span className="hidden sm:inline">{t("nav.restart")}</span>
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/forum"
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <MessagesSquare size={13} /> Community Forum
-            </Link>
-            <LanguageToggle />
-            <button
-              onClick={handleExport}
-              disabled={exporting}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <Download size={13} /> {exporting ? t("nav.exporting") : t("nav.exportPdf")}
-            </button>
-            <button
-              onClick={handleRestart}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <RefreshCw size={13} /> {t("nav.restart")}
-            </button>
+        </div>
+
+        {/* Horizontal tab nav */}
+        <div className="border-b border-border bg-card">
+          <div className="max-w-5xl mx-auto flex gap-0 px-4 sm:px-6 overflow-x-auto scrollbar-none">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const isActive = activePage === item.key;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => setActivePage(item.key)}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
+                    isActive
+                      ? "border-accent text-accent"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Icon size={15} />
+                  {item.label}
+                  {item.key === "risks" && output && output.riskFlags.filter((f) => f.severity === "high").length > 0 && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-destructive/20 text-destructive font-semibold">
+                      {output.riskFlags.filter((f) => f.severity === "high").length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Horizontal tab nav */}
-      <div className="border-b border-border bg-card sticky top-[53px] z-10">
-        <div className="max-w-5xl mx-auto flex gap-0 px-6 overflow-x-auto">
-          {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const isActive = activePage === item.key;
-            return (
-              <button
-                key={item.key}
-                onClick={() => setActivePage(item.key)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
-                  isActive
-                    ? "border-accent text-accent"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <Icon size={15} />
-                {item.label}
-                {item.key === "risks" && output && output.riskFlags.filter((f) => f.severity === "high").length > 0 && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-destructive/20 text-destructive font-semibold">
-                    {output.riskFlags.filter((f) => f.severity === "high").length}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Profile summary bar */}
       {output && (

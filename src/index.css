@@ -4,98 +4,98 @@
 
 @layer base {
   :root {
-    /* BridgePath Blue Trust Design System */
-    --background: 210 30% 97%;
-    --foreground: 215 60% 10%;
+    /* BridgePath — warm paper + forest green (Refiant-inspired) */
+    --background: 40 24% 97%;
+    --foreground: 30 8% 9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 60% 10%;
+    --card-foreground: 30 8% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 60% 10%;
+    --popover-foreground: 30 8% 9%;
 
-    /* Deep navy - trust & stability */
-    --primary: 215 65% 22%;
-    --primary-foreground: 210 40% 98%;
+    /* Forest green - primary action */
+    --primary: 152 26% 34%;
+    --primary-foreground: 40 30% 98%;
 
-    /* Lighter blue - accent */
-    --accent: 205 75% 48%;
-    --accent-foreground: 0 0% 100%;
+    /* Warm peach - accent */
+    --accent: 24 72% 68%;
+    --accent-foreground: 25 45% 20%;
 
-    /* Sky blue - secondary action */
-    --secondary: 210 35% 92%;
-    --secondary-foreground: 215 65% 22%;
+    /* Soft mint - secondary */
+    --secondary: 150 22% 92%;
+    --secondary-foreground: 152 30% 22%;
 
-    /* Slate blue - muted */
-    --muted: 212 25% 93%;
-    --muted-foreground: 215 20% 46%;
+    /* Warm neutral - muted */
+    --muted: 40 16% 93%;
+    --muted-foreground: 35 6% 43%;
 
-    /* Blue shades */
-    --blue-light: 205 80% 94%;
-    --blue-mid: 205 70% 55%;
-    --blue-deep: 215 65% 30%;
-    --blue-dark: 215 70% 18%;
+    /* Brand shades (kept under the legacy names for compatibility) */
+    --blue-light: 150 30% 93%;
+    --blue-mid: 152 30% 42%;
+    --blue-deep: 154 30% 26%;
+    --blue-dark: 156 32% 16%;
 
-    /* Status - still blue-toned */
-    --success: 175 55% 35%;
-    --success-light: 175 55% 93%;
+    /* Status */
+    --success: 152 34% 33%;
+    --success-light: 150 32% 93%;
     --success-foreground: 0 0% 100%;
 
-    --warning: 210 50% 50%;
-    --warning-light: 210 50% 94%;
-    --warning-foreground: 215 60% 15%;
+    --warning: 26 62% 46%;
+    --warning-light: 30 70% 94%;
+    --warning-foreground: 25 50% 22%;
 
-    --destructive: 0 65% 52%;
+    --destructive: 6 62% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 25% 87%;
-    --input: 215 25% 87%;
-    --ring: 205 75% 48%;
+    --border: 38 16% 88%;
+    --input: 38 16% 88%;
+    --ring: 152 26% 34%;
 
-    --radius: 0.75rem;
+    --radius: 0.875rem;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(215 70% 15%), hsl(210 60% 28%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 30% 98%));
-    --gradient-accent: linear-gradient(135deg, hsl(205 75% 48%), hsl(210 65% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(156 32% 14%), hsl(152 26% 28%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(40 24% 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(24 72% 68%), hsl(36 70% 74%));
 
-    /* Shadows */
-    --shadow-sm: 0 1px 3px 0 hsl(215 65% 22% / 0.06);
-    --shadow-md: 0 4px 16px -2px hsl(215 65% 22% / 0.1);
-    --shadow-lg: 0 10px 40px -4px hsl(215 65% 22% / 0.14);
-    --shadow-card: 0 2px 8px 0 hsl(215 65% 22% / 0.06), 0 1px 2px 0 hsl(215 65% 22% / 0.04);
-    --shadow-glow: 0 0 0 3px hsl(205 75% 48% / 0.15);
+    /* Shadows — soft, warm, low contrast */
+    --shadow-sm: 0 1px 2px 0 hsl(30 12% 12% / 0.05);
+    --shadow-md: 0 6px 20px -6px hsl(30 12% 12% / 0.1);
+    --shadow-lg: 0 16px 44px -12px hsl(30 12% 12% / 0.16);
+    --shadow-card: 0 1px 2px 0 hsl(30 12% 12% / 0.04), 0 6px 18px -12px hsl(30 12% 12% / 0.1);
+    --shadow-glow: 0 0 0 3px hsl(152 26% 34% / 0.16);
 
-    --sidebar-background: 215 70% 15%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 205 75% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 65% 25%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 215 45% 28%;
-    --sidebar-ring: 205 75% 48%;
+    --sidebar-background: 156 32% 14%;
+    --sidebar-foreground: 40 30% 96%;
+    --sidebar-primary: 24 72% 68%;
+    --sidebar-primary-foreground: 25 45% 18%;
+    --sidebar-accent: 154 28% 22%;
+    --sidebar-accent-foreground: 40 30% 96%;
+    --sidebar-border: 154 24% 26%;
+    --sidebar-ring: 152 26% 44%;
   }
 
   .dark {
-    --background: 215 65% 7%;
-    --foreground: 210 40% 96%;
-    --card: 215 55% 11%;
-    --card-foreground: 210 40% 96%;
-    --popover: 215 55% 11%;
-    --popover-foreground: 210 40% 96%;
-    --primary: 205 75% 48%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 215 40% 18%;
-    --secondary-foreground: 210 40% 96%;
-    --muted: 215 40% 18%;
-    --muted-foreground: 215 25% 65%;
-    --accent: 205 75% 48%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 215 40% 22%;
-    --input: 215 40% 22%;
-    --ring: 205 75% 48%;
+    --background: 156 20% 7%;
+    --foreground: 40 24% 95%;
+    --card: 156 18% 11%;
+    --card-foreground: 40 24% 95%;
+    --popover: 156 18% 11%;
+    --popover-foreground: 40 24% 95%;
+    --primary: 152 34% 50%;
+    --primary-foreground: 156 30% 8%;
+    --secondary: 155 14% 18%;
+    --secondary-foreground: 40 24% 95%;
+    --muted: 155 14% 18%;
+    --muted-foreground: 40 10% 66%;
+    --accent: 24 72% 68%;
+    --accent-foreground: 25 45% 16%;
+    --destructive: 6 55% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 155 14% 22%;
+    --input: 155 14% 22%;
+    --ring: 152 34% 50%;
   }
 }
 
@@ -105,10 +105,16 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Georgia', 'Cambria', serif;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: 'Space Grotesk', 'DM Sans', system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
 }
+
 
 @layer components {
   .bp-card {

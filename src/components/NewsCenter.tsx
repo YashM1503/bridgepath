@@ -11,7 +11,7 @@ export default function NewsCenter() {
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h2 className="text-xl font-bold text-foreground">Visa & Immigration Updates</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-foreground">Visa &amp; Immigration Updates</h2>
         <p className="text-sm text-muted-foreground mt-1">
           One place to reach every official feed that actually changes your case — plus short
           plain-language explainers on things newcomers most often miss. Summaries reviewed{" "}
@@ -19,12 +19,12 @@ export default function NewsCenter() {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
         {NEWS_TAGS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTag(t.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap flex-shrink-0 ${
               tag === t.key
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-secondary"

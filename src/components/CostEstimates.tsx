@@ -15,18 +15,19 @@ function formatFee(item: CostItem) {
 function CostRow({ item }: { item: CostItem }) {
   return (
     <div className="bp-card p-4">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="min-w-0">
-          <h3 className="font-semibold text-sm text-foreground">{item.name}</h3>
+          <h3 className="font-semibold text-sm text-foreground break-words">{item.name}</h3>
           {item.code && <p className="text-xs text-muted-foreground mt-0.5">{item.code}</p>}
         </div>
         <div className="text-right flex-shrink-0">
-          <p className="font-bold text-base text-foreground tabular-nums">{formatFee(item)}</p>
+          <p className="font-bold text-sm sm:text-base text-foreground tabular-nums">{formatFee(item)}</p>
           <p className="text-[10px] text-muted-foreground uppercase tracking-wide">Ballpark</p>
         </div>
       </div>
 
       <dl className="mt-3 grid gap-2 text-xs sm:grid-cols-2">
+
         <div>
           <dt className="text-muted-foreground">Typical timeline</dt>
           <dd className="text-foreground">{item.typicalTimeline}</dd>
@@ -65,7 +66,7 @@ export default function CostEstimates({ corridorId }: CostEstimatesProps) {
   return (
     <div className="space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-bold text-foreground">Fees & Cost Estimates</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-foreground">Fees &amp; Cost Estimates</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Ballpark government fees and the extras people forget, so you can budget before you begin.
           Figures are illustrative and last reviewed {LAST_VERIFIED} — confirm every amount on the
@@ -74,7 +75,7 @@ export default function CostEstimates({ corridorId }: CostEstimatesProps) {
       </div>
 
       {quotable.length > 1 && (
-        <div className="bp-card p-4 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <div className="bp-card p-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-[auto_auto_1fr] lg:items-center lg:gap-x-8">
           <div>
             <p className="text-[10px] uppercase tracking-wide text-muted-foreground">Smallest single fee</p>
             <p className="text-lg font-bold text-foreground tabular-nums">${low.toLocaleString()}</p>
@@ -85,18 +86,18 @@ export default function CostEstimates({ corridorId }: CostEstimatesProps) {
             </p>
             <p className="text-lg font-bold text-foreground tabular-nums">${high.toLocaleString()}</p>
           </div>
-          <p className="text-xs text-muted-foreground flex-1 min-w-[14rem]">
+          <p className="text-xs text-muted-foreground sm:col-span-2 lg:col-span-1">
             Almost nobody pays all of these. Use it only as an upper bound while planning.
           </p>
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible">
         {COST_CATEGORIES.map((cat) => (
           <button
             key={cat.key}
             onClick={() => setFilter(cat.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap flex-shrink-0 ${
               filter === cat.key
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-secondary"

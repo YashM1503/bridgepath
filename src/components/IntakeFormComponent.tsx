@@ -97,6 +97,12 @@ const primaryGoals = [
   { value: "all", label: "✨ All of the above" },
 ];
 
+const COL_CLASSES: Record<number, string> = {
+  1: "grid-cols-1",
+  2: "grid-cols-1 sm:grid-cols-2",
+  3: "grid-cols-2 sm:grid-cols-3",
+};
+
 function SelectGrid({
   options,
   value,
@@ -109,13 +115,13 @@ function SelectGrid({
   cols?: number;
 }) {
   return (
-    <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+    <div className={`grid gap-2 ${COL_CLASSES[cols] ?? COL_CLASSES[2]}`}>
       {options.map((opt) => (
         <button
           key={opt.value}
           type="button"
           onClick={() => onChange(opt.value)}
-          className={`text-left px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all ${
+          className={`text-left px-3 sm:px-4 py-3 rounded-lg border-2 text-sm font-medium transition-all break-words ${
             value === opt.value
               ? "border-accent bg-accent/5 text-foreground shadow-sm"
               : "border-border bg-card text-foreground hover:border-accent/40 hover:bg-muted/50"
@@ -127,6 +133,7 @@ function SelectGrid({
     </div>
   );
 }
+
 
 function ToggleCard({
   value,
@@ -149,13 +156,13 @@ function ToggleCard({
           : "border-border bg-card hover:border-border/70"
       }`}
     >
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
           <p className="font-medium text-sm text-foreground">{label}</p>
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
         </div>
         <div
-          className={`w-10 h-6 rounded-full transition-all flex items-center ${
+          className={`w-10 h-6 flex-shrink-0 rounded-full transition-all flex items-center ${
             value ? "bg-accent" : "bg-muted"
           }`}
         >
@@ -237,9 +244,9 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
           const isCompleted = i < step;
           return (
             <React.Fragment key={s.key}>
-              <div className="flex flex-col items-center gap-1">
+              <div className="flex flex-col items-center gap-1 min-w-0">
                 <div
-                  className={`w-9 h-9 rounded-full flex items-center justify-center text-sm transition-all ${
+                  className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center text-sm transition-all ${
                     isCompleted
                       ? "bg-accent text-accent-foreground"
                       : isActive
@@ -249,12 +256,16 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
                 >
                   {isCompleted ? "✓" : <Icon size={16} />}
                 </div>
-                <span className={`text-xs font-medium ${isActive ? "text-foreground" : "text-muted-foreground"}`}>
+                <span
+                  className={`text-[10px] sm:text-xs font-medium text-center leading-tight max-w-[4.5rem] sm:max-w-none truncate sm:whitespace-normal ${
+                    isActive ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                >
                   {stepLabels[i]}
                 </span>
               </div>
               {i < STEPS.length - 1 && (
-                <div className={`flex-1 h-px mx-2 ${i < step ? "bg-accent" : "bg-border"}`} />
+                <div className={`flex-1 h-px mx-1 sm:mx-2 ${i < step ? "bg-accent" : "bg-border"}`} />
               )}
             </React.Fragment>
           );
@@ -270,7 +281,7 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
       </div>
 
       {/* Card wrapper */}
-      <div className="bp-card p-6 sm:p-8 animate-fade-in">
+      <div className="bp-card p-4 sm:p-6 md:p-8 animate-fade-in">
         {/* Step 0: Origin */}
         {step === 0 && (
           <div className="space-y-6">
@@ -488,29 +499,29 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-3 mt-6">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 mt-6">
         {step > 0 && (
           <button
             type="button"
             onClick={handleBack}
-            className="flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition-all"
           >
             <ChevronLeft size={16} /> {t("intake.back")}
           </button>
         )}
-        <div className="flex-1" />
+        <div className="hidden sm:block sm:flex-1" />
         {step < STEPS.length - 1 ? (
           <button
             type="button"
             onClick={handleNext}
-            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
             {t("intake.continue")} <ChevronRight size={16} />
           </button>
         ) : (
           <button
             type="submit"
-            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
             {t("intake.submit")} <ChevronRight size={16} />
           </button>

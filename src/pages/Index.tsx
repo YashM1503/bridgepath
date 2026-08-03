@@ -121,7 +121,7 @@ export default function Index() {
         {/* Full-bleed dark hero */}
         <div className="hero-gradient text-primary-foreground">
           {/* Top bar */}
-          <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <span className="text-primary-foreground/60 text-xs font-medium tracking-wider">BRIDGEPATH</span>
             <div className="flex items-center gap-3">
               <Link
@@ -135,7 +135,7 @@ export default function Index() {
           </div>
 
           {/* Hero content */}
-          <div className="max-w-4xl mx-auto px-6 pt-8 pb-20 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-14 sm:pb-20 text-center">
             <div
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-medium tracking-wide"
               style={{ background: "hsl(205 75% 48% / 0.2)", color: "hsl(205 80% 75%)" }}
@@ -143,16 +143,16 @@ export default function Index() {
               <MapPin size={12} /> {t("landing.tagline")}
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
               <span>{t("landing.title")}</span>
               <span className="sr-only"> — Financial Onboarding for Newcomers to the USA</span>
             </h1>
 
-            <p className="text-xl sm:text-2xl font-light mb-4 opacity-90 italic">
+            <p className="text-lg sm:text-2xl font-light mb-4 opacity-90 italic">
               {t("landing.subtitle")}
             </p>
 
-            <p className="text-base opacity-60 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-sm sm:text-base opacity-60 max-w-2xl mx-auto mb-10 leading-relaxed">
               {t("landing.description")}
             </p>
 
@@ -184,7 +184,7 @@ export default function Index() {
             </div>
 
             {/* Stats row */}
-            <div className="flex justify-center gap-12 sm:gap-16 mb-10">
+            <div className="flex flex-wrap justify-center gap-8 sm:gap-16 mb-10">
               {[
                 { value: t("landing.stats.time"), label: t("landing.stats.timeLabel") },
                 { value: t("landing.stats.pathways"), label: t("landing.stats.pathwaysLabel") },
@@ -206,13 +206,13 @@ export default function Index() {
 
         {/* Demo profiles */}
         {showDemo && (
-          <div className="max-w-4xl mx-auto px-6 py-8 w-full">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full">
             <DemoProfiles onSelect={handleDemoSelect} />
           </div>
         )}
 
         {/* Features */}
-        <div className="max-w-4xl mx-auto px-6 py-14 w-full">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-14">
             {[
               { emoji: "🧭", title: t("landing.features.pathways"), desc: t("landing.features.pathwaysDesc") },
@@ -260,7 +260,7 @@ export default function Index() {
   if (appStep === "intake") {
     return (
       <div className="min-h-screen bg-background">
-        <div className="max-w-2xl mx-auto px-6 py-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <button
             onClick={handleRestart}
             className="text-muted-foreground text-sm hover:text-foreground mb-6 flex items-center gap-1"
@@ -292,77 +292,89 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Results Header */}
-      <div className="border-b border-border bg-card px-6 py-3 sticky top-0 z-20">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button onClick={handleRestart} className="text-foreground font-bold text-lg hover:opacity-80 transition-opacity">
-              BridgePath
-            </button>
-            {output && (
-              <span className="text-xs text-muted-foreground border-l border-border pl-4">
-                {demoProfile ? `${demoProfile.avatar} ${demoProfile.name}` : ""} {output.profile.corridorId.toUpperCase()} → ZIP
-              </span>
-            )}
+      <div className="sticky top-0 z-20">
+        {/* Results Header */}
+        <div className="border-b border-border bg-card px-4 sm:px-6 py-3">
+          <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="flex items-center gap-3 min-w-0">
+              <button onClick={handleRestart} className="text-foreground font-bold text-base sm:text-lg hover:opacity-80 transition-opacity">
+                BridgePath
+              </button>
+              {output && (
+                <span className="hidden sm:inline text-xs text-muted-foreground border-l border-border pl-4 truncate">
+                  {demoProfile ? `${demoProfile.avatar} ${demoProfile.name}` : ""} {output.profile.corridorId.toUpperCase()} → ZIP
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/forum"
+                className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <MessagesSquare size={13} /> Community Forum
+              </Link>
+              <Link
+                to="/forum"
+                aria-label="Community forum"
+                className="md:hidden flex items-center justify-center p-2 rounded-lg border border-border hover:bg-muted transition-all"
+              >
+                <MessagesSquare size={14} />
+              </Link>
+              <LanguageToggle />
+              <button
+                onClick={handleExport}
+                disabled={exporting}
+                aria-label={t("nav.exportPdf")}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <Download size={13} /> <span className="hidden sm:inline">{exporting ? t("nav.exporting") : t("nav.exportPdf")}</span>
+              </button>
+              <button
+                onClick={handleRestart}
+                aria-label={t("nav.restart")}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
+              >
+                <RefreshCw size={13} /> <span className="hidden sm:inline">{t("nav.restart")}</span>
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/forum"
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <MessagesSquare size={13} /> Community Forum
-            </Link>
-            <LanguageToggle />
-            <button
-              onClick={handleExport}
-              disabled={exporting}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <Download size={13} /> {exporting ? t("nav.exporting") : t("nav.exportPdf")}
-            </button>
-            <button
-              onClick={handleRestart}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-medium border border-border hover:bg-muted transition-all"
-            >
-              <RefreshCw size={13} /> {t("nav.restart")}
-            </button>
+        </div>
+
+        {/* Horizontal tab nav */}
+        <div className="border-b border-border bg-card">
+          <div className="max-w-5xl mx-auto flex gap-0 px-4 sm:px-6 overflow-x-auto scrollbar-none">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const isActive = activePage === item.key;
+              return (
+                <button
+                  key={item.key}
+                  onClick={() => setActivePage(item.key)}
+                  className={`flex items-center gap-2 px-3 sm:px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
+                    isActive
+                      ? "border-accent text-accent"
+                      : "border-transparent text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <Icon size={15} />
+                  {item.label}
+                  {item.key === "risks" && output && output.riskFlags.filter((f) => f.severity === "high").length > 0 && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-destructive/20 text-destructive font-semibold">
+                      {output.riskFlags.filter((f) => f.severity === "high").length}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      {/* Horizontal tab nav */}
-      <div className="border-b border-border bg-card sticky top-[53px] z-10">
-        <div className="max-w-5xl mx-auto flex gap-0 px-6 overflow-x-auto">
-          {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const isActive = activePage === item.key;
-            return (
-              <button
-                key={item.key}
-                onClick={() => setActivePage(item.key)}
-                className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
-                  isActive
-                    ? "border-accent text-accent"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <Icon size={15} />
-                {item.label}
-                {item.key === "risks" && output && output.riskFlags.filter((f) => f.severity === "high").length > 0 && (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-destructive/20 text-destructive font-semibold">
-                    {output.riskFlags.filter((f) => f.severity === "high").length}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
 
       {/* Profile summary bar */}
       {output && (
-        <div className="bg-muted/50 border-b border-border px-6 py-2.5">
-          <div className="max-w-5xl mx-auto flex flex-wrap gap-4 text-xs text-foreground">
+        <div className="bg-muted/50 border-b border-border px-4 sm:px-6 py-2.5">
+          <div className="max-w-5xl mx-auto flex flex-wrap gap-x-4 gap-y-1 text-xs text-foreground">
             <span><strong>Status:</strong> {output.profile.corridorId.toUpperCase()} · {output.profile.riskLevel}</span>
             {demoProfile && <span><strong>Demo:</strong> {demoProfile.name} — {demoProfile.tagline}</span>}
           </div>
@@ -371,15 +383,15 @@ export default function Index() {
 
       {/* Disclaimer banner */}
       {output && (
-        <div style={{ background: "hsl(var(--warning-light))" }} className="border-b border-border px-6 py-2">
-          <p className="text-xs text-foreground/70 text-center max-w-5xl mx-auto">
+        <div style={{ background: "hsl(var(--warning-light))" }} className="border-b border-border px-4 sm:px-6 py-2">
+          <p className="text-xs text-foreground/70 text-center max-w-5xl mx-auto leading-relaxed">
             {t("results.disclaimer")}
           </p>
         </div>
       )}
 
       {/* Content */}
-      <div className="max-w-5xl mx-auto px-6 py-6 pb-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-6 pb-16">
         {output && (
           <>
             {activePage === "pathways" && (

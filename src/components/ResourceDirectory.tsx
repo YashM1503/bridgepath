@@ -53,7 +53,7 @@ export default function ResourceDirectory({ corridorId }: ResourceDirectoryProps
   return (
     <div className="space-y-5 animate-fade-in">
       <div>
-        <h2 className="text-xl font-bold text-foreground">Resource Directory</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-foreground">Resource Directory</h2>
         <p className="text-sm text-muted-foreground mt-1">
           {resources.length} official links to government services, embassies, legal help and financial
           resources for your corridor. Informational only — always verify directly with the provider.

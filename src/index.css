@@ -186,6 +186,15 @@
     background: var(--gradient-accent);
   }
 
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   .pathway-card {
     @apply bp-card p-4 sm:p-6 transition-all duration-200 hover:shadow-[var(--shadow-md)] cursor-pointer border-2;
   }

@@ -187,7 +187,7 @@
   }
 
   .pathway-card {
-    @apply bp-card p-6 transition-all duration-200 hover:shadow-[var(--shadow-md)] cursor-pointer border-2;
+    @apply bp-card p-4 sm:p-6 transition-all duration-200 hover:shadow-[var(--shadow-md)] cursor-pointer border-2;
   }
 
   .pathway-card.selected {

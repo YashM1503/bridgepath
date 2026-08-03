@@ -41,8 +41,8 @@ function confidenceBadge(confidence: number) {
 export default function PathwayResults({ pathways, selected, onSelect }: PathwayResultsProps) {
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="flex items-center justify-between mb-2">
-        <h1 className="text-xl font-bold text-foreground">Your Transition Pathways</h1>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
+        <h1 className="text-lg sm:text-xl font-bold text-foreground">Your Transition Pathways</h1>
         <span className="text-xs text-muted-foreground">{pathways.length} options ranked for you</span>
       </div>
       <p className="text-sm text-muted-foreground mb-2">

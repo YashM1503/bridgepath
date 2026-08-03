@@ -24,7 +24,7 @@ export default function NewsCenter() {
           <button
             key={t.key}
             onClick={() => setTag(t.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap flex-shrink-0 ${
               tag === t.key
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-secondary"

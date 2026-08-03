@@ -499,29 +499,29 @@ export default function IntakeFormComponent({ onComplete }: IntakeFormProps) {
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-3 mt-6">
+      <div className="flex flex-col-reverse sm:flex-row gap-3 mt-6">
         {step > 0 && (
           <button
             type="button"
             onClick={handleBack}
-            className="flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition-all"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-border text-foreground text-sm font-medium hover:bg-muted transition-all"
           >
             <ChevronLeft size={16} /> {t("intake.back")}
           </button>
         )}
-        <div className="flex-1" />
+        <div className="hidden sm:block sm:flex-1" />
         {step < STEPS.length - 1 ? (
           <button
             type="button"
             onClick={handleNext}
-            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
             {t("intake.continue")} <ChevronRight size={16} />
           </button>
         ) : (
           <button
             type="submit"
-            className="flex items-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg accent-gradient text-accent-foreground text-sm font-semibold transition-all hover:shadow-lg"
           >
             {t("intake.submit")} <ChevronRight size={16} />
           </button>

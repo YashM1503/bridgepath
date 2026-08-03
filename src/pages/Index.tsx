@@ -135,7 +135,7 @@ export default function Index() {
           </div>
 
           {/* Hero content */}
-          <div className="max-w-4xl mx-auto px-6 pt-8 pb-20 text-center">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-14 sm:pb-20 text-center">
             <div
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 text-xs font-medium tracking-wide"
               style={{ background: "hsl(205 75% 48% / 0.2)", color: "hsl(205 80% 75%)" }}
@@ -143,16 +143,16 @@ export default function Index() {
               <MapPin size={12} /> {t("landing.tagline")}
             </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight">
               <span>{t("landing.title")}</span>
               <span className="sr-only"> — Financial Onboarding for Newcomers to the USA</span>
             </h1>
 
-            <p className="text-xl sm:text-2xl font-light mb-4 opacity-90 italic">
+            <p className="text-lg sm:text-2xl font-light mb-4 opacity-90 italic">
               {t("landing.subtitle")}
             </p>
 
-            <p className="text-base opacity-60 max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-sm sm:text-base opacity-60 max-w-2xl mx-auto mb-10 leading-relaxed">
               {t("landing.description")}
             </p>
 
@@ -184,7 +184,7 @@ export default function Index() {
             </div>
 
             {/* Stats row */}
-            <div className="flex justify-center gap-12 sm:gap-16 mb-10">
+            <div className="flex flex-wrap justify-center gap-8 sm:gap-16 mb-10">
               {[
                 { value: t("landing.stats.time"), label: t("landing.stats.timeLabel") },
                 { value: t("landing.stats.pathways"), label: t("landing.stats.pathwaysLabel") },
@@ -206,13 +206,13 @@ export default function Index() {
 
         {/* Demo profiles */}
         {showDemo && (
-          <div className="max-w-4xl mx-auto px-6 py-8 w-full">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 w-full">
             <DemoProfiles onSelect={handleDemoSelect} />
           </div>
         )}
 
         {/* Features */}
-        <div className="max-w-4xl mx-auto px-6 py-14 w-full">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-14 w-full">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-14">
             {[
               { emoji: "🧭", title: t("landing.features.pathways"), desc: t("landing.features.pathwaysDesc") },
@@ -260,7 +260,7 @@ export default function Index() {
   if (appStep === "intake") {
     return (
       <div className="min-h-screen bg-background">
-        <div className="max-w-2xl mx-auto px-6 py-8">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           <button
             onClick={handleRestart}
             className="text-muted-foreground text-sm hover:text-foreground mb-6 flex items-center gap-1"

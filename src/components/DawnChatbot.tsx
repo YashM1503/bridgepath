@@ -146,11 +146,10 @@ export default function DawnChatbot() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110"
-          style={{ background: "linear-gradient(135deg, hsl(210 60% 35%), hsl(210 70% 50%))" }}
+          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all hover:scale-110 bg-primary"
           aria-label="Open Dawn chatbot"
         >
-          <MessageCircle size={24} className="text-white" />
+          <MessageCircle size={24} className="text-primary-foreground" />
         </button>
       )}
 
@@ -158,20 +157,21 @@ export default function DawnChatbot() {
       {open && (
         <div className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] h-[520px] max-h-[calc(100vh-3rem)] rounded-2xl shadow-2xl border border-border bg-card flex flex-col overflow-hidden animate-fade-in">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-border" style={{ background: "hsl(210 60% 20%)" }}>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-border hero-gradient">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm" style={{ background: "hsl(210 70% 50%)" }}>
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-sm bg-accent">
                 🌅
               </div>
               <div>
-                <p className="text-sm font-semibold text-white">Dawn</p>
-                <p className="text-[10px] text-white/60">BridgePath Assistant • {LANG_LABELS[lang]}</p>
+                <p className="text-sm font-semibold text-primary-foreground">Dawn</p>
+                <p className="text-[10px] text-primary-foreground/60">BridgePath Assistant • {LANG_LABELS[lang]}</p>
               </div>
             </div>
-            <button onClick={() => setOpen(false)} aria-label="Close Dawn chatbot" className="text-white/60 hover:text-white">
+            <button onClick={() => setOpen(false)} aria-label="Close Dawn chatbot" className="text-primary-foreground/60 hover:text-primary-foreground">
               <X size={18} />
             </button>
           </div>
+
 
           {/* Messages */}
           <div ref={scrollRef} className="flex-1 overflow-y-auto p-3 space-y-3">
